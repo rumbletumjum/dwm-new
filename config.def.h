@@ -12,20 +12,14 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "misc Termsyn:pixelsize=12" };
 static const char dmenufont[]       = "misc Termsyn:pixelsize=12";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
 
-static const char normfg[]          = "#c5c8c6";
-static const char normbg[]          = "#1d1f21";
-static const char normborder[]      = "cadetblue";
-/* static const char normborder[]      = "#282a2e"; */
-static const char selfg[]           = "#1d1f21";
-static const char selbg[]           = "#81a2be";
-static const char selborder[]       = "coral";
-/* static const char selborder[]       = "#f0c674"; */
+static const char normfg[]          = "#f8f8f2";
+static const char normbg[]          = "#44475a";
+static const char normborder[]      = "#181a23";
+
+static const char selfg[]           = "#f8f8f2";
+static const char selbg[]           = "#282a36";
+static const char selborder[]       = "#bd93f9";
 
 static const char *colors[][3]      = {
 	/*         fg      bg      border   */
