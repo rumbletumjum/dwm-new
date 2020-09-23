@@ -108,6 +108,10 @@ static Key keys[] = {
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_comma,  incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_period, incnmaster,     {.i = -1 } },
+	{ MOD1KEY|ShiftMask,            XK_j,      inplacerotate,  {.i = +1} },
+	{ MOD1KEY|ShiftMask,            XK_k,      inplacerotate,  {.i = -1} },
+	{ MOD1KEY|ShiftMask,            XK_h,      inplacerotate,  {.i = +2} },
+	{ MOD1KEY|ShiftMask,            XK_l,      inplacerotate,  {.i = -2} },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_r,      reorganizetags, {0} },
