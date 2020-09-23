@@ -57,7 +57,7 @@ static const int attachdirection = 5;    /* 0 default, 1 above, 2 aside, 3 below
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
-	{ "TTT",      bstack },
+	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[@]",      spiral },
 	{ "[\\]",     dwindle },
 	{ ":::",      gaplessgrid },
@@ -65,13 +65,13 @@ static const Layout layouts[] = {
 	{ "H[]",      deck },
 	{ "###",      nrowgrid },
 /*	{ "[M]",      monocle }, 
+	{ "TTT",      bstack },
 	{ "[\\]",     dwindle },
 	{ "===",      bstackhoriz },
 	{ "HHH",      grid },
 	{ ":::",      gaplessgrid },
 	{ "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster }, */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL,       NULL },
 };
 
@@ -122,7 +122,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,      killclient,     {0} },
 
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[1]} },
+	/* { MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[1]} }, */
 
 	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ShiftMask,             XK_y,      setlayout,      {.v = &layouts[3]} },
@@ -135,6 +135,7 @@ static Key keys[] = {
 
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
