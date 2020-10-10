@@ -23,11 +23,53 @@ static const char selfg[]           = "#000000";
 static const char selbg[]           = "steelblue";
 static const char selborder[]       = "#4b8bad";
 
+/* Base16 */
+static const char base00[] = "#1d1f21";
+static const char base01[] = "#282a2e";
+static const char base02[] = "#373b41";
+static const char base03[] = "#969896";
+static const char base04[] = "#b4b7b4";
+static const char base05[] = "#c5c8c6";
+static const char base06[] = "#e0e0e0";
+static const char base07[] = "#ffffff";
+static const char base08[] = "#cc6666";
+static const char base09[] = "#de935f";
+static const char base0A[] = "#f0c674";
+static const char base0B[] = "#b5bd68";
+static const char base0C[] = "#8abeb7";
+static const char base0D[] = "#81a2be";
+static const char base0E[] = "#b294bb";
+static const char base0F[] = "#a3685a";
+/*  Base16 Ocean */
+/* static const char base00[]          = "#2b303b"; */
+/* static const char base01[]          = "#343d46"; */
+/* static const char base02[]          = "#4f5b66"; */
+/* static const char base03[]          = "#65737e"; */
+/* static const char base04[]          = "#a7adba"; */
+/* static const char base05[]          = "#c0c5ce"; */
+/* static const char base06[]          = "#dfe1e8"; */
+/* static const char base07[]          = "#eff1f5"; */
+/* static const char base08[]          = "#bf616a"; */
+/* static const char base09[]          = "#d08770"; */
+/* static const char base0A[]          = "#ebcb8b"; */
+/* static const char base0B[]          = "#a3be8c"; */
+/* static const char base0C[]          = "#96b5b4"; */
+/* static const char base0D[]          = "#8fa1b3"; */
+/* static const char base0E[]          = "#b48ead"; */
+/* static const char base0F[]          = "#ab7967"; */
+/* static const char col_base00[]      = "#2b303b"; */
+/* static const char col_base01[]      = "#343d46"; */
+/* static const char col_base02[]      = "#4f5b66"; */
+/* static const char col_base04[]      = "#a7adba"; */
+/* static const char col_base0C[]      = "#96b5b4"; */
+/* static const char col_base0D[]      = "#8fa1b3"; */
 
 static const char *colors[][3]      = {
 	/*         fg      bg      border   */
-  [SchemeNorm] = { normfg, normbg, normborder }, 
-  [SchemeSel]  = { selfg,  selbg,  selborder  }, 
+  [SchemeNorm] = { base05, base00, "#e6e6e6" },
+  [SchemeSel]  = { base05, base02,  "#3584e4" },
+  [SchemeStatus]  = { base09, base00,  base0C  },
+  [SchemeBar]  = { base0C, base00,  base0C  },
 };
 
 typedef struct {
@@ -118,7 +160,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbg, "-nf", normfg, "-sb", selbg, "-sf", selfg, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", base00, "-nf", base05, "-sb", base02, "-sf", base05, NULL };
 static const char *termcmd[]  = { "urxvtc", NULL };
 static const char *windowmenucmd[] = { "windowmenu", NULL };
 
