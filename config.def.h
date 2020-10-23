@@ -1,17 +1,18 @@
 /* See LICENSE file for copyright and license details. */
 
+#define BROWSER "brave"
+#define TERMINAL "st"
+
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 5;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 4;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 4;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 4;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 4;       /* vert outer gap between windows and screen edge */
-static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
+static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "PragmataPro:size=9" };
-static const char dmenufont[]       = "PragmataPro:size=9";
 
 static const char fg[]		    = "#b9b9b9";
 
@@ -64,20 +65,48 @@ static const char base0F[] = "#a3685a";
 /* static const char col_base0C[]      = "#96b5b4"; */
 /* static const char col_base0D[]      = "#8fa1b3"; */
 
+/* static const char *colors[][3]      = { */
+/* 	/\*         fg      bg      border   *\/ */
+/*   [SchemeNorm] = { "#222222", "#888888", "#e6e6e6" }, */
+/*   [SchemeSel]  = { base05, base02,  "#3584e4" }, */
+/*   [SchemeStatus]  = { base09, base00,  base0C  }, */
+/*   [SchemeBar]  = { base0C, base00,  base0C  }, */
+/* }; */
+
+static const char *fonts[]               = { "monospace:size=9" };
+static const char dmenufont[]            = "monospace:size=9";
+
+static const char norm_fg[]              = "#aaaaaa";
+static const char norm_bg[]              = "#222222";
+static const char norm_border[]          = "#000000";
+
+static const char status_fg[]            = "#aaaaaa";
+static const char status_bg[]            = "#222222";
+static const char status_border[]        = "#000000";
+
+static const char sel_fg[]               = "#ffffff";
+static const char sel_bg[]               = "#285577";
+static const char sel_border[]           = "#285577";
+
+static const char bar_fg[]               = "#ffffff";
+static const char bar_bg[]               = "#285577";
+static const char bar_border[]           = "#535d6c";
+
 static const char *colors[][3]      = {
-	/*         fg      bg      border   */
-  [SchemeNorm] = { base05, base00, "#e6e6e6" },
-  [SchemeSel]  = { base05, base02,  "#3584e4" },
-  [SchemeStatus]  = { base09, base00,  base0C  },
-  [SchemeBar]  = { base0C, base00,  base0C  },
+	/*               fg           bg         border   */
+	[SchemeNorm]   = { norm_fg,   norm_bg,   norm_border   },
+	[SchemeStatus] = { status_fg, status_bg, status_border },
+	[SchemeSel]    = { sel_fg,    sel_bg,    sel_border    },
+	[SchemeBar]    = { bar_fg,    bar_bg,    bar_border    },
 };
 
 typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"urxvtc", "-name", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"urxvtc", "-name", "spfm",   "-g", "144x41", "-e", "nnn", NULL };
+
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "144x41", NULL };
+const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "lf", NULL };
 const char *spcmd3[] = {"keepassxc", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -96,17 +125,20 @@ static const Rule rules[] = {
 	/* class            instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",           NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",        NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Brave-browser",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Thunar",         NULL,       NULL,       0,            1,           -1 },
 	{ "Lxappearance",   NULL,       NULL,       0,            1,           -1 },
 	{ "File-roller",    NULL,       NULL,       0,            1,           -1 },
-        { NULL,             "spterm",   NULL,       SPTAG(0),     1,           -1 },
-        { NULL,             "spfm",     NULL,       SPTAG(1),     1,           -1 },
+	{ "qBittorrent",    NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Surf",			NULL,       NULL,       1 << 3,       0,           -1 },
+	{ NULL,             "spterm",   NULL,       SPTAG(0),     1,           -1 },
+	{ NULL,             "spfm",     NULL,       SPTAG(1),     1,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static const float mfact         = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster         = 1;    /* number of clients in master area */
+static const int resizehints     = 0;    /* 1 means respect size hints in tiled resizals */
 static const int attachdirection = 5;    /* 0 default, 1 above, 2 aside, 3 below, 4 bottom, 5 top */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
@@ -127,13 +159,15 @@ static const Layout layouts[] = {
 	{ "H[]",      deck },
 
 	{ "|M|",      centeredmaster },
-	{ "###",      nrowgrid },
+	{ ">M>",      centeredfloatingmaster },
+
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	/*{ "TTT",      bstack },
 	{ "[\\]",     dwindle },
 	{ "===",      bstackhoriz },
 	{ "HHH",      grid },
 	{ ":::",      gaplessgrid },
+	{ "###",      nrowgrid },
 	{ ">M>",      centeredfloatingmaster }, */
 	{ NULL,       NULL },
 };
@@ -160,9 +194,10 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", base00, "-nf", base05, "-sb", base02, "-sf", base05, NULL };
-static const char *termcmd[]  = { "urxvtc", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", norm_bg, "-nf", norm_fg, "-sb", sel_bg, "-sf", sel_fg, NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char *windowmenucmd[] = { "windowmenu", NULL };
+static const char *browsercmd[] = { "brave", NULL };
 
 
 static Key keys[] = {
@@ -170,7 +205,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_d,      spawn,          {.v = windowmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_comma,  incnmaster,     {.i = +1 } },
@@ -210,8 +245,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-        { MODKEY,                       XK_g,      togglescratch,  {.ui = 0 } },
-        { MODKEY,                       XK_e,      togglescratch,  {.ui = 1 } },
+	{ MODKEY,                       XK_g,      togglescratch,  {.ui = 0 } },
+	{ MODKEY,                       XK_e,      togglescratch,  {.ui = 1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
