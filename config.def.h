@@ -154,7 +154,7 @@ static const Layout layouts[] = {
 	{ "[\\]",     dwindle },
 
 	{ ":::",      gaplessgrid },
-	{ "---",      horizgrid },
+	{ "###",      nrowgrid },
 
 	{ "[M]",      monocle }, 
 	{ "H[]",      deck },
@@ -167,8 +167,8 @@ static const Layout layouts[] = {
 	{ "[\\]",     dwindle },
 	{ "===",      bstackhoriz },
 	{ "HHH",      grid },
+	{ "---",      horizgrid },
 	{ ":::",      gaplessgrid },
-	{ "###",      nrowgrid },
 	{ ">M>",      centeredfloatingmaster }, */
 	{ NULL,       NULL },
 };
