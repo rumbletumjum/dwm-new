@@ -17,21 +17,21 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]               = { "monospace:size=9" };
 static const char dmenufont[]            = "monospace:size=9";
 
-static const char norm_fg[]              = "#aaaaaa";
-static const char norm_bg[]              = "#222222";
-static const char norm_border[]          = "#000000";
+static const char norm_fg[]              = "#333333";
+static const char norm_bg[]              = "#ffffff";
+static const char norm_border[]          = "#cccccc";
 
-static const char status_fg[]            = "#aaaaaa";
-static const char status_bg[]            = "#222222";
-static const char status_border[]        = "#000000";
+static const char status_fg[]            = "#000000";
+static const char status_bg[]            = "#cccccc";
+static const char status_border[]        = "#cccccc";
 
 static const char sel_fg[]               = "#ffffff";
-static const char sel_bg[]               = "#285577";
-static const char sel_border[]           = "#285577";
+static const char sel_bg[]               = "#3366ff";
+static const char sel_border[]           = "#3366ff";
 
 static const char bar_fg[]               = "#ffffff";
-static const char bar_bg[]               = "#285577";
-static const char bar_border[]           = "#535d6c";
+static const char bar_bg[]               = "#3366ff";
+static const char bar_border[]           = "#3366ff";
 
 static const char *colors[][3]      = {
 	/*               fg           bg         border   */
