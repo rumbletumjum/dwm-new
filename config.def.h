@@ -17,28 +17,23 @@ static const int topbar             = 0;        /* 0 means bottom bar */
 static const char *fonts[]               = { "xos4 Terminus:pixelsize=28:style=bold:antialias=false:autohint=false" };
 static const char dmenufont[]            = "xos4 Terminus:pixelsize=28:style=bold:antialias=false:autohint=false";
 
-static const char norm_fg[]              = "#333333";
-static const char norm_bg[]              = "#ffffff";
-static const char norm_border[]          = "#cccccc";
-
-static const char status_fg[]            = "#000000";
-static const char status_bg[]            = "#cccccc";
-static const char status_border[]        = "#cccccc";
-
-static const char sel_fg[]               = "#ffffff";
-static const char sel_bg[]               = "#3366ff";
-static const char sel_border[]           = "#3366ff";
-
-static const char bar_fg[]               = "#ffffff";
-static const char bar_bg[]               = "#3366ff";
-static const char bar_border[]           = "#3366ff";
+static const char col_black[]       = "#000000";
+static const char col_gray1[]       = "#222222";
+static const char col_gray2[]       = "#444444";
+static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray4[]       = "#eeeeee";
+static const char col_cyan1[]       = "#005577";
+static const char col_cyan2[]       = "#285577";
+static const char col_bblue[]       = "#6699cc";
+static const char col_blue2[]       = "#1177AA";
+static const char col_blue3[]       = "#006699";
 
 static const char *colors[][3]      = {
-	/*               fg           bg         border   */
-	[SchemeNorm]   = { norm_fg,   norm_bg,   norm_border   },
-	[SchemeStatus] = { status_fg, status_bg, status_border },
-	[SchemeSel]    = { sel_fg,    sel_bg,    sel_border    },
-	[SchemeBar]    = { bar_fg,    bar_bg,    bar_border    },
+	/*               fg         bg         border   */
+    [SchemeNorm]   = { col_gray3, col_gray1, col_gray2 },
+    [SchemeStatus] = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]    = { col_gray4, col_blue2, col_bblue },
+	[SchemeBar]    = { col_gray4, col_blue2, col_bblue },
 };
 
 typedef struct {
@@ -81,7 +76,7 @@ static const Rule rules[] = {
 static const float mfact         = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster         = 1;    /* number of clients in master area */
 static const int resizehints     = 0;    /* 1 means respect size hints in tiled resizals */
-static const int attachdirection = 5;    /* 0 default, 1 above, 2 aside, 3 below, 4 bottom, 5 top */
+static const int attachdirection = 0;    /* 0 default, 1 above, 2 aside, 3 below, 4 bottom, 5 top */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
@@ -136,7 +131,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static       char dmenumon[2]      = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", norm_bg, "-nf", norm_fg, "-sb", sel_bg, "-sf", sel_fg, NULL };
+static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_bblue, "-sf", col_black, "-h", "30", NULL };
 static const char *termcmd[]       = { "st", "-e", "fish", NULL };
 static const char *windowmenucmd[] = { "windowmenu", NULL };
 static const char *browsercmd[]    = { "brave", NULL };
