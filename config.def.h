@@ -23,18 +23,38 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
+static const char col_white[]       = "#ffffff";
 static const char col_cyan1[]       = "#005577";
 static const char col_cyan2[]       = "#285577";
-static const char col_bblue[]       = "#6699cc";
+static const char col_bblue[]       = "#6699CC";
 static const char col_blue2[]       = "#1177AA";
 static const char col_blue3[]       = "#006699";
+static const char col_blue4[]       = "#36a3d9";
+static const char col_ayubg[]       = "#0F1419";
+static const char col_ayufg[]       = "#E6E1CF";
 
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm]   = { col_gray3, col_gray1, col_gray2 },
-	[SchemeStatus] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]    = { col_gray4, col_blue2, col_bblue },
-	[SchemeBar]    = { col_gray4, col_blue2, col_bblue },
+static char normfg[]       = "#bbbbbb";
+static char normbg[]       = "#222222";
+static char normborder[]   = "#444444";
+
+static char statusfg[]     = "#bbbbbb";
+static char statusbg[]     = "#222222";
+static char statusborder[] = "#444444";
+
+static char selfg[]        = "#eeeeee";
+static char selbg[]        = "#005577";
+static char selborder[]    = "#005577";
+
+static char barfg[]        = "#eeeeee";
+static char barbg[]        = "#005577";
+static char barborder[]    = "#005577";
+
+static char *colors[][3] = {
+	/*                 fg        bg        border   */
+	[SchemeNorm]   = { normfg,   normbg,   normborder   },
+	[SchemeStatus] = { statusfg, statusbg, statusborder },
+	[SchemeSel]    = { selfg,    selbg,    selborder    },
+	[SchemeBar]    = { barfg,    barbg,    barborder    },
 };
 
 typedef struct {
