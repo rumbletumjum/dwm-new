@@ -1,22 +1,22 @@
 /* See LICENSE file for copyright and license details. */
 
-#define BROWSER "brave"
+#define BROWSER "chromium"
 #define TERMINAL "st"
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 20;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
 
-static const char *fonts[]               = { "xos4 Terminus:pixelsize=10:style=bold:antialias=false:autohint=false" };
-static const char dmenufont[]            = "xos4 Terminus:pixelsize=10:style=bold:antialias=false:autohint=false";
+static const char *fonts[]               = { "xos4 Terminus:pixelsize=28:style=bold:antialias=false:autohint=false" };
+static const char dmenufont[]            =   "xos4 Terminus:pixelsize=28:style=bold:antialias=false:autohint=false";
 
 static const char col_black[]       = "#000000";
 static const char col_gray1[]       = "#222222";
@@ -31,8 +31,8 @@ static const char col_blue3[]       = "#006699";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-    [SchemeNorm]   = { col_gray3, col_gray1, col_gray2 },
-    [SchemeStatus] = { col_gray3, col_gray1, col_gray2 },
+	[SchemeNorm]   = { col_gray3, col_gray1, col_gray2 },
+	[SchemeStatus] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]    = { col_gray4, col_blue2, col_bblue },
 	[SchemeBar]    = { col_gray4, col_blue2, col_bblue },
 };
@@ -42,14 +42,16 @@ typedef struct {
 	const void *cmd;
 } Sp;
 
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "80x24", NULL };
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "132x43", "-e", "fish", NULL };
 const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "lf", NULL };
 const char *spcmd3[] = {"st", "-n", "spspotify", "-g", "132x43", "-e", "spt", NULL };
+const char *spcmd4[] = {"st", "-n", "spssh", "-g", "132x43", "-e", "ssh", "-t", "pro",  NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spranger",    spcmd2},
 	{"spspotify",   spcmd3},
+	{"spssh",       spcmd4},
 };
 
 /* tagging */
@@ -63,6 +65,7 @@ static const Rule rules[] = {
 	{ "Gimp",           NULL,          NULL,       0,            1,          0,          0,         -1 },
 	{ "Firefox",        NULL,          NULL,       1 << 8,       0,          0,          0,         -1 },
 	{ "Brave-browser",  NULL,          NULL,       1 << 1,       0,          0,          0,         -1 },
+	{ "Chromium",       NULL,          NULL,       1 << 1,       0,          0,          0,         -1 },
 	{ "Thunar",         NULL,          NULL,       0,            1,          0,          0,         -1 },
 	{ "Lxappearance",   NULL,          NULL,       0,            1,          0,          0,         -1 },
 	{ "qBittorrent",    NULL,          NULL,       1 << 8,       0,          0,          0,         -1 },
@@ -71,6 +74,7 @@ static const Rule rules[] = {
 	{ NULL,             "spterm",      NULL,       SPTAG(0),     1,          0,          0,         -1 },
 	{ NULL,             "spfm",        NULL,       SPTAG(1),     1,          0,          0,         -1 },
 	{ NULL,             "spspotify",   NULL,       SPTAG(2),     1,          0,          0,         -1 },
+	{ NULL,             "spssh",       NULL,       SPTAG(3),     1,          0,          0,         -1 },
 };
 
 /* layout(s) */
@@ -135,7 +139,7 @@ static       char dmenumon[2]      = "0"; /* component of dmenucmd, manipulated 
 static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_bblue, "-sf", col_black, "-h", "30", NULL };
 static const char *termcmd[]       = { "st", "-e", "fish", NULL };
 static const char *windowmenucmd[] = { "windowmenu", NULL };
-static const char *browsercmd[]    = { "brave", NULL };
+static const char *browsercmd[]    = { BROWSER, NULL };
 
 
 static Key keys[] = {
@@ -181,7 +185,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,               XK_comma,         tagmon,         {.i = -1 }            },
 	{ MODKEY|ShiftMask,               XK_period,        tagmon,         {.i = +1 }            },
 	{ MODKEY,                         XK_g,             togglescratch,  {.ui = 0 }            },
-	{ MODKEY,                         XK_f,             togglescratch,  {.ui = 1 }            },
+	{ MODKEY,                         XK_f,             togglescratch,  {.ui = 3 }            },
 	{ MODKEY,                         XK_e,             togglescratch,  {.ui = 2 }            },
 	{ Mod1Mask|ShiftMask,             XK_BackSpace,     quit,           {0}                   },
 	{ Mod1Mask|Mod4Mask,              XK_u,             incrgaps,       {.i = +1 }            },
