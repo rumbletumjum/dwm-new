@@ -16,7 +16,6 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 static const char *fonts[]               = { "xos4 Terminus:pixelsize=28:style=bold:antialias=false:autohint=false" };
-static const char dmenufont[]            =   "xos4 Terminus:pixelsize=28:style=bold:antialias=false:autohint=false";
 
 static const char col_black[]       = "#000000";
 static const char col_gray1[]       = "#222222";
@@ -139,7 +138,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static       char dmenumon[2]      = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_bblue, "-sf", col_black, "-h", "30", NULL };
+static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_bblue, "-sf", col_black, "-h", "30", NULL };
 static const char *termcmd[]       = { "st", "-e", "fish", NULL };
 static const char *windowmenucmd[] = { "windowmenu", NULL };
 static const char *browsercmd[]    = { BROWSER, NULL };
