@@ -66,7 +66,7 @@ static const Rule rules[] = {
 	 */
 	/* class            instance       title       tags mask     isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",           NULL,          NULL,       0,            1,          0,          0,         -1 },
-	{ "Firefox",        NULL,          NULL,       1 << 8,       0,          0,          0,         -1 },
+	{ "firefox",        NULL,          NULL,       1 << 1,       0,          0,          0,         -1 },
 	{ "Brave-browser",  NULL,          NULL,       1 << 1,       0,          0,          0,         -1 },
 	{ "Chromium",       NULL,          NULL,       1 << 1,       0,          0,          0,         -1 },
 	{ "Thunar",         NULL,          NULL,       0,            1,          0,          0,         -1 },
