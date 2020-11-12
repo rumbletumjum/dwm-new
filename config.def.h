@@ -15,7 +15,7 @@ static       int smartgaps          = 1;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static       int topbar             = 1;        /* 0 means bottom bar */
 
-static       char *fonts[]               = { "xos4 Terminus:pixelsize=28:style=bold:antialias=false:autohint=false" };
+static       char *fonts[]          = { "xos4 Terminus:pixelsize=28:style=bold:antialias=false:autohint=false" };
 
 static const char col_black[]       = "#000000";
 static const char col_gray1[]       = "#222222";
@@ -32,21 +32,21 @@ static const char col_blue4[]       = "#36a3d9";
 static const char col_ayubg[]       = "#0f1419";
 static const char col_ayufg[]       = "#e6e1cf";
 
-static char normfg[]       = "#bbbbbb";
-static char normbg[]       = "#222222";
-static char normborder[]   = "#444444";
+static char normfg[]                = "#bbbbbb";
+static char normbg[]                = "#222222";
+static char normborder[]            = "#444444";
 
-static char statusfg[]     = "#bbbbbb";
-static char statusbg[]     = "#222222";
-static char statusborder[] = "#444444";
+static char statusfg[]              = "#bbbbbb";
+static char statusbg[]              = "#222222";
+static char statusborder[]          = "#444444";
 
-static char selfg[]        = "#eeeeee";
-static char selbg[]        = "#005577";
-static char selborder[]    = "#005577";
+static char selfg[]                 = "#eeeeee";
+static char selbg[]                 = "#005577";
+static char selborder[]             = "#005577";
 
-static char barfg[]        = "#eeeeee";
-static char barbg[]        = "#005577";
-static char barborder[]    = "#005577";
+static char barfg[]                 = "#eeeeee";
+static char barbg[]                 = "#005577";
+static char barborder[]             = "#005577";
 
 static char *colors[][3] = {
 	/*                 fg        bg        border   */
@@ -57,28 +57,26 @@ static char *colors[][3] = {
 };
 
 ResourcePref resources[] = {
-    { "font", STR_PTR, &fonts[0] },
+	{ "font",         STR_PTR, &fonts[0]     },
 
-    { "normfg", STR_ARR, &normfg },
-    { "normbg", STR_ARR, &normbg },
-    { "normborder", STR_ARR, &normborder },
+	{ "normfg",       STR_ARR, &normfg       },
+	{ "normbg",       STR_ARR, &normbg       },
+	{ "normborder",   STR_ARR, &normborder   },
 
-    { "statusfg", STR_ARR, &statusfg },
-    { "statusbg", STR_ARR, &statusbg },
-    { "statusborder", STR_ARR, &statusborder },
+	{ "statusfg",     STR_ARR, &statusfg     },
+	{ "statusbg",     STR_ARR, &statusbg     },
+	{ "statusborder", STR_ARR, &statusborder },
 
-    { "selfg", STR_ARR, &selfg },
-    { "selbg", STR_ARR, &selbg },
-    { "selborder", STR_ARR, &selborder },
+	{ "selfg",        STR_ARR, &selfg        },
+	{ "selbg",        STR_ARR, &selbg        },
+	{ "selborder",    STR_ARR, &selborder    },
 
-    { "barfg", STR_ARR, &barfg },
-    { "barbg", STR_ARR, &barbg },
-    { "barborder", STR_ARR, &barborder },
+	{ "barfg",        STR_ARR, &barfg        },
+	{ "barbg",        STR_ARR, &barbg        },
+	{ "barborder",    STR_ARR, &barborder    },
 
-	{ "borderpx", INTEGER, &borderpx },
-	{ "topbar", INTEGER, &topbar },
-
-
+	{ "borderpx",     INTEGER, &borderpx     },
+	{ "topbar",       INTEGER, &topbar       },
 };
 
 typedef struct {
