@@ -186,7 +186,6 @@ static const char *browsercmd[]    = { BROWSER, NULL };
 static Key keys[] = {
 	/* modifier                       key               function        argument */
 	{ MODKEY,                         XK_p,             spawn,          {.v = dmenucmd }      },
-	{ MODKEY,                         XK_d,             spawn,          {.v = windowmenucmd } },
 	{ MODKEY|ShiftMask,               XK_Return,        spawn,          {.v = termcmd }       },
 	{ MODKEY,                         XK_b,             spawn,          {.v = browsercmd }    },
 	{ MODKEY,                         XK_comma,         incnmaster,     {.i = +1 }            },
