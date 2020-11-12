@@ -36,6 +36,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xproto.h>
 #include <X11/Xutil.h>
+#include <X11/Xresource.h>
 #ifdef XINERAMA
 #include <X11/extensions/Xinerama.h>
 #endif /* XINERAMA */
@@ -82,6 +83,13 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
+
+enum resource_type {
+    STR_PTR,
+    STR_ARR,
+    INTEGER,
+    FLOAT
+};
 
 typedef union {
 	int i;
@@ -156,6 +164,13 @@ struct Monitor {
 	Pertag *pertag;
 };
 
+typedef struct ResourcePref ResourcePref;
+struct ResourcePref {
+    char *name;
+    enum resource_type type;
+    void *dst;
+};
+
 typedef struct {
 	const char *class;
 	const char *instance;
@@ -211,6 +226,7 @@ static void inplacerotate(const Arg *arg);
 static void insertclient(Client *item, Client *insertItem, int after);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
+static void load_xresources(void);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
@@ -228,6 +244,7 @@ static void reorganizetags(const Arg *arg);
 static void resize(Client *c, int x, int y, int w, int h, int interact);
 static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
+static void resourceload(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
 static void restack(Monitor *m);
 static void run(void);
 static void scan(void);
@@ -1289,6 +1306,27 @@ killclient(const Arg *arg)
 }
 
 void
+load_xresources(void)
+{
+	Display *display;
+	char *resm;
+	XrmDatabase db;
+	ResourcePref *p;
+
+	display = XOpenDisplay(NULL);
+	resm = XResourceManagerString(display);
+	if (!resm)
+		return;
+
+	db = XrmGetStringDatabase(resm);
+
+	for (p = resources; p < resources + LENGTH(resources); p++)
+		resourceload(db, p->name, p->type, p->dst);
+
+	XCloseDisplay(display);
+}
+
+void
 manage(Window w, XWindowAttributes *wa)
 {
 	Client *c, *t = NULL, *term = NULL;
@@ -1701,6 +1739,51 @@ resizemouse(const Arg *arg)
 		sendmon(c, m);
 		selmon = m;
 		focus(NULL);
+	}
+}
+
+void
+resourceload(XrmDatabase db, char *name, enum resource_type rtype, void *dst)
+{
+    char     fullname[256];
+    char     *type;
+    XrmValue ret;
+
+    char  *sdst = NULL;
+    char  **spdst = NULL;
+    int   *idst = NULL;
+    float *fdst = NULL;
+
+    sdst = dst;
+    spdst = dst;
+    idst = dst;
+    fdst = dst;
+
+    snprintf(fullname, sizeof(fullname), "%s.%s", "dwm", name);
+    fullname[sizeof(fullname) - 1] = '\0';
+	XrmGetResource(db, fullname, "*", &type, &ret);
+
+	if (!(ret.addr == NULL || strncmp("String", type, 64))) {
+		switch (rtype) {
+        case STR_PTR:
+            *spdst = ret.addr;
+            break;
+        case STR_ARR:
+            strcpy(sdst, ret.addr); 
+            break;
+		/*case STRING:
+            if (!(strncmp("font", name, 4)))
+                *spdst = ret.addr;
+            else
+                strcpy(sdst, ret.addr);
+			break;*/
+		case INTEGER:
+			*idst = strtoul(ret.addr, NULL, 10);
+			break;
+		case FLOAT:
+			*fdst = strtof(ret.addr, NULL);
+			break;
+		}
 	}
 }
 
@@ -2784,6 +2867,8 @@ main(int argc, char *argv[])
 	if (!(xcon = XGetXCBConnection(dpy)))
 		die("dwm: cannot get xcb connection\n");
 	checkotherwm();
+    XrmInitialize();
+    load_xresources();
 	setup();
 #ifdef __OpenBSD__
 	if (pledge("stdio rpath proc exec ps", NULL) == -1)
