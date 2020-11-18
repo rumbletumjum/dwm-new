@@ -199,7 +199,7 @@ static Key keys[] = {
 	{ MODKEY,                         XK_h,             setmfact,       {.f = -0.05}          },
 	{ MODKEY,                         XK_l,             setmfact,       {.f = +0.05}          },
 	{ MODKEY,                         XK_r,             reorganizetags, {0}                   },
-	{ MODKEY,                         XK_Return,        zoom,           {0}                   },
+	{ MODKEY,                         XK_Return,        zoomswap,       {0}                   },
 	{ MODKEY,                         XK_m,             focusmaster,    {0}                   },
 	{ MODKEY,                         XK_Tab,           view,           {0}                   },
 	{ MODKEY,                         XK_w,             killclient,     {0}                   },

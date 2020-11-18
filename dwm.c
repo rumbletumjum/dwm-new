@@ -51,9 +51,10 @@
 #include "drw.h"
 #include "util.h"
 
-/* macros */
+/* macros {{{1 */
 #define BUTTONMASK              (ButtonPressMask|ButtonReleaseMask)
 #define CLEANMASK(mask)         (mask & ~(numlockmask|LockMask) & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
+#define FIND_PREV(v, cur, list) for (v = list; v && v->next && v->next != cur; v = v->next)
 #define GETINC(X)               ((X) - 2000)
 #define INC(X)                  ((X) + 2000)
 #define INTERSECT(x,y,w,h,m)    (MAX(0, MIN((x)+(w),(m)->wx+(m)->ww) - MAX((x),(m)->wx)) \
@@ -73,6 +74,7 @@
 #define SPTAGMASK   			(((1 << LENGTH(scratchpads))-1) << LENGTH(tags))
 #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
 #define TRUNC(X,A,B)            (MAX((A), MIN((X), (B))))
+/* }}}1 */
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
@@ -91,6 +93,7 @@ enum resource_type {
     FLOAT
 };
 
+/* structure & union definintions {{{1 */
 typedef union {
 	int i;
 	unsigned int ui;
@@ -181,6 +184,7 @@ typedef struct {
 	int noswallow;
 	int monitor;
 } Rule;
+/* }}}1 */
 
 /* function declarations */
 static void applyrules(Client *c);
@@ -188,6 +192,7 @@ static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interac
 static void arrange(Monitor *m);
 static void arrangemon(Monitor *m);
 static void attach(Client *c);
+static void attach_at(Client *c, Client **target);
 static void attachabove(Client *c);
 static void attachaside(Client *c);
 static void attachbelow(Client *c);
@@ -290,6 +295,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void zoomswap(const Arg *arg);
 
 static pid_t getparentprocess(pid_t p);
 static int isdescprocess(pid_t p, pid_t c);
@@ -487,6 +493,15 @@ attach(Client *c)
 {
 	c->next = c->mon->clients;
 	c->mon->clients = c;
+}
+
+void
+attach_at(Client *c, Client **target)
+{
+    Client *at = *target;
+
+    c->next = at;
+    at = c;
 }
 
 void
@@ -2879,6 +2894,47 @@ zoom(const Arg *arg)
 		if (!c || !(c = nexttiled(c->next)))
 			return;
 	pop(c);
+}
+
+void
+zoomswap(const Arg *arg)
+{
+    static Client *last = NULL;
+    Client *c = selmon->sel, *old, *cur = NULL, *prev = NULL;
+
+	if (!selmon->lt[selmon->sellt]->arrange
+	|| (selmon->sel && selmon->sel->isfloating))
+		return;
+
+	if (c == nexttiled(selmon->clients)) {
+		FIND_PREV(cur, last, selmon->clients);
+		if (cur != selmon->clients)
+			prev = nexttiled(cur->next);
+		if (!prev || prev != last) {
+			last = NULL;
+			if (!(c = nexttiled(c->next))) return;
+		} else {
+			c = prev;
+		}
+	}
+	if (c != (old = nexttiled(selmon->clients)) && !cur)
+		FIND_PREV(cur, c, selmon->clients);
+	detach(c);
+    /*attach_at(c, &selmon->clients);*/
+    c->next = selmon->clients;
+    selmon->clients = c;
+	if (c != old && cur && cur != selmon->clients) {
+		last = old;
+		if (old && cur != old) {
+			detach(old);
+			/*attach_at(old, &cur->next);*/
+            old->next = cur->next;
+            cur->next = old;
+		}
+	}
+    focus(c);
+    arrange(c->mon);
+
 }
 
 int
