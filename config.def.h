@@ -1,4 +1,6 @@
-/* See LICENSE file for copyright and license details. */
+/* See LICENSE file for copyright and license details. 
+ * vim:ft=c:fdm=syntax:ts=4:sw=4:noet
+ */
 
 #define BROWSER "chromium"
 #define TERMINAL "st"
@@ -7,10 +9,10 @@
 static       unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 20;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 15;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 15;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 15;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 15;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static       int topbar             = 1;        /* 0 means bottom bar */
@@ -111,7 +113,7 @@ static const Rule rules[] = {
 	{ "Thunar",         NULL,          NULL,       0,            1,          0,          0,         -1 },
 	{ "Lxappearance",   NULL,          NULL,       0,            1,          0,          0,         -1 },
 	{ "qBittorrent",    NULL,          NULL,       1 << 8,       0,          0,          0,         -1 },
-	{ "Surf",           NULL,          NULL,       1 << 3,       0,          0,          0,         -1 },
+	{ "mpv",            NULL,          NULL,       1 << 3,       0,          0,          0,         -1 },
 	{ "St",             NULL,          NULL,       0,            0,          1,          0,         -1 },
 	{ NULL,             "spterm",      NULL,       SPTAG(0),     1,          0,          0,         -1 },
 	{ NULL,             "spfm",        NULL,       SPTAG(1),     1,          0,          0,         -1 },
@@ -160,10 +162,10 @@ static const Layout layouts[] = {
 #define MODKEY Mod4Mask
 #define MOD1KEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MOD1KEY,                      KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY,                       KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ ControlMask,                  KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MOD1KEY|ShiftMask,            KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ ControlMask|ShiftMask,        KEY,      toggletag,      {.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
@@ -224,8 +226,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,               XK_0,             tag,            {.ui = ~0 }           },
 	{ MODKEY|ShiftMask,               XK_comma,         tagmon,         {.i = -1 }            },
 	{ MODKEY|ShiftMask,               XK_period,        tagmon,         {.i = +1 }            },
-	{ MODKEY,                         XK_g,             togglescratch,  {.ui = 0 }            },
-	{ MODKEY,                         XK_f,             togglescratch,  {.ui = 3 }            },
+	{ MODKEY,                         XK_g,             togglescratch,  {.ui = 3 }            },
+	{ MODKEY,                         XK_f,             togglescratch,  {.ui = 0 }            },
 	{ MODKEY,                         XK_e,             togglescratch,  {.ui = 2 }            },
 	{ Mod1Mask|ShiftMask,             XK_BackSpace,     quit,           {0}                   },
 	{ Mod1Mask|Mod4Mask,              XK_u,             incrgaps,       {.i = +1 }            },
