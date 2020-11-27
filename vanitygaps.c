@@ -219,7 +219,7 @@ bstack(Monitor *m)
 		sh = (mh - ih) * (1 - m->mfact);
 		mh = mh - ih - sh;
 		sx = mx;
-		sy = my + mh + ih;
+		my = sy + sh + ih;
 	}
 
 	getfacts(m, mw, sw, &mfacts, &sfacts, &mrest, &srest);
